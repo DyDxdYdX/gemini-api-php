@@ -1,6 +1,6 @@
 {
-  "name": "gemini-api-php/client",
-  "description": "API client for Google's Gemini API",
+  "name": "DyDxdYdX/gemini-api-php",
+  "description": "API client for Google's Gemini API, original from gemini-api-php/client",
   "keywords": [
     "php",
     "client",

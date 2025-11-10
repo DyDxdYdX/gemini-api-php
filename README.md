@@ -10,6 +10,7 @@
 # Gemini API PHP Client
 
 Gemini API PHP Client allows you to use the Google's generative AI models, like Gemini Pro and Gemini Pro Vision.
+Original from gemini-api-php/client.
 
 _This library is not developed or endorsed by Google._
 
