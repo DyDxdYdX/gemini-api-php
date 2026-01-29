@@ -34,6 +34,7 @@ class ModelName
     public const GEMINI_2_5_FLASH = 'gemini-2.5-flash';
     public const GEMINI_2_5_PRO = 'gemini-2.5-pro';
     public const GEMINI_3_PRO_PREVIEW = 'gemini-3-pro-preview';
+    public const GEMINI_3_FLASH_PREVIEW = 'gemini-3-flash-preview';
 
     // Optimized for: Measuring the relatedness of text strings
     public const TEXT_EMBEDDING_004 = 'text-embedding-004';
