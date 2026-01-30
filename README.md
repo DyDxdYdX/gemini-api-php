@@ -17,10 +17,13 @@ _This library is not developed or endorsed by Google._
 - Erdem Köse - **[github.com/erdemkose](https://github.com/erdemkose)**
 
 ## Table of Contents
+
 - [Installation](#installation)
 - [How to use](#how-to-use)
   - [Basic text generation](#basic-text-generation)
+  - [YAML-formatted prompts](#yaml-formatted-prompts)
   - [Text generation with system instruction](#text-generation-with-system-instruction)
+  - [YAML system instructions](#yaml-system-instructions)
   - [Multimodal input](#multimodal-input)
   - [Chat Session (Multi-Turn Conversations)](#chat-session-multi-turn-conversations)
   - [Chat Session with history](#chat-session-with-history)
@@ -53,7 +56,7 @@ you need to allow `php-http/discovery` composer plugin or install a PSR-18 compa
 
 ### Basic text generation
 
-```php
+````php
 use GeminiAPI\Client;
 use GeminiAPI\Resources\ModelName;
 use GeminiAPI\Resources\Parts\TextPart;
@@ -66,7 +69,31 @@ $response = $client->generativeModel(ModelName::GEMINI_PRO)->generateContent(
 print $response->text();
 // PHP: A server-side scripting language used to create dynamic web applications.
 // Easy to learn, widely used, and open-source.
-```
+
+### YAML-formatted prompts
+
+Choosing YAML over JSON can significantly save tokens, boosting both context and prompt efficiency.
+
+```php
+use GeminiAPI\Client;
+use GeminiAPI\Resources\Content;
+use GeminiAPI\Resources\ModelName;
+
+$data = [
+    'name' => 'xyz',
+    'role' => 'engineer',
+    'skills' => ['AI', 'MLOps', 'Python'],
+];
+
+$client = new Client('GEMINI_API_KEY');
+$response = $client->generativeModel(ModelName::GEMINI_PRO)->generateContent(
+    Content::yaml($data),
+);
+
+print $response->text();
+````
+
+````
 
 ### Text generation with system instruction
 
@@ -87,7 +114,30 @@ $response = $client->withV1BetaVersion()
 
 print $response->text();
 // Meow?  <?php echo 'Hello, world!'; ?>  Purrfectly concise, wouldn't you say?  *Stretches luxuriously*
-```
+
+### YAML system instructions
+
+You can also provide system instructions in YAML format for better efficiency.
+
+```php
+use GeminiAPI\Client;
+use GeminiAPI\Resources\ModelName;
+
+$data = [
+    'role' => 'assistant',
+    'task' => 'translate',
+];
+
+$client = new Client('GEMINI_API_KEY');
+$response = $client->withV1BetaVersion()
+    ->generativeModel(ModelName::GEMINI_1_5_FLASH)
+    ->withSystemInstructionYaml($data)
+    ->generateContent(
+        new TextPart('PHP in less than 100 chars'),
+    );
+````
+
+````
 
 ### Multimodal input
 
@@ -114,7 +164,7 @@ print $response->text();
 // The elephant is made of metal and has a glowing symbol on its forehead.
 // The Earth is surrounded by a network of glowing lines.
 // The image is set against a starry background.
-```
+````
 
 ### Chat Session (Multi-Turn Conversations)
 
@@ -169,7 +219,7 @@ $history = [
         <?php
         echo "Hello World!";
         ?>
-        
+
         This code will print "Hello World!" to the standard output.
         TEXT,
         Role::Model,
@@ -232,7 +282,7 @@ $client->generativeModel(ModelName::GEMINI_PRO)->generateContentStream(
 
 ### Streaming Chat Session
 
-> Requires `curl` extension to be enabled 
+> Requires `curl` extension to be enabled
 
 ```php
 use GeminiAPI\Client;
@@ -249,7 +299,7 @@ $history = [
         <?php
         echo "Hello World!";
         ?>
-        
+
         This code will print "Hello World!" to the standard output.
         TEXT,
         Role::Model,

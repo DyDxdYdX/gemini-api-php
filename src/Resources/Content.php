@@ -60,6 +60,18 @@ class Content
         );
     }
 
+    /**
+     * @param array<mixed> $data
+     * @param Role $role
+     * @return self
+     */
+    public static function yaml(
+        array $data,
+        Role $role = Role::User,
+    ): self {
+        return self::text(Yaml::fromArray($data), $role);
+    }
+
     public static function image(
         MimeType $mimeType,
         string $image,

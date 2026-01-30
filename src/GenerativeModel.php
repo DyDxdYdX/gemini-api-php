@@ -147,4 +147,16 @@ class GenerativeModel
 
         return $clone;
     }
+
+    /**
+     * @param array<mixed> $data
+     * @return self
+     */
+    public function withSystemInstructionYaml(array $data): self
+    {
+        $clone = clone $this;
+        $clone->systemInstruction = Content::yaml($data, Role::User);
+
+        return $clone;
+    }
 }
